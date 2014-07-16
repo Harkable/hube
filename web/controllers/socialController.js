@@ -107,7 +107,7 @@ module.exports.twitterStream = function(){
     });
 
     twit.stream('statuses/filter', {
-        track: ['harkable', 'Harkable', '@harkable', '#Harkable']
+        track: ['harkable', 'Harkable', '@harkable', '#harkable', '#Harkable']
     }, function(stream) {
         stream.on('data', function(tweet) {
             console.log("NEW TWEET with mention", tweet.text);
