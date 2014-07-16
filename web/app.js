@@ -3,11 +3,11 @@ var express = require('express'),
     morgan = require('morgan'),
     jade = require('jade'),
     http = require('http'),
-    twitter = require('twitter'),
     config = require('./config'),
     app = express(),
     server = http.createServer(app),
     io = require('socket.io').listen(server);
+
 
 //modules
 var routes = require('./routes'),
@@ -33,25 +33,8 @@ routes.init(app);
 
 io.sockets.on('connection', socketsController.init);
 
-module.exports.io = io;
-
-// twitter
-
-var twit = new twitter({
-    consumer_key: config.credentials.twitter.consumer_key,
-    consumer_secret: config.credentials.twitter.consumer_secret,
-    access_token_key: config.credentials.twitter.access_token_key,
-    access_token_secret: config.credentials.twitter.access_token_secret
-});
-
-twit.stream('statuses/filter', {
-    track: 'harkable'
-}, function(stream) {
-    stream.on('data', function(tweet) {
-        console.log(tweet);
-    });
-});
-
 socialController.init();
 
 module.exports.io = io;
+module.exports.badger = 'animal';
+
