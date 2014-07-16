@@ -1,0 +1,15 @@
+{
+  "name": "hube",
+  "version": "0.0.1",
+  "description": "Harkable Cube",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "pi-gpio": "0.0.6"
+  },
+  "author": "Sam Billingham",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Harkable/hube.git"
+  }
+}
