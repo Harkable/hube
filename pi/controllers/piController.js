@@ -1,7 +1,7 @@
 // var gpio = require("pi-gpio");
 var Gpio = require('onoff').Gpio,
-    tw1 = new Gpio(16, 'out'),
-    tw2 = new Gpio(18, 'out'),
+    tw1 = new Gpio(23, 'out'),
+    tw2 = new Gpio(24, 'out'),
     iv;
 
 module.exports.twitter = function() {
