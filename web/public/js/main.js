@@ -26,8 +26,8 @@ $(function () {
         socketEvents : function() {
             var self = this;
 
-            this.socket.on('event-name', function(data){
-                console.log(data);
+            this.socket.on('update', function(data){
+                console.log("update: ", data);
             });
         }
     };
