@@ -6,7 +6,7 @@ module.exports.init = function(socket){
 };
 module.exports.update = function(type){
 
-    console.log("update");
+    //console.log("update");
     switch(type){
 
         case 'fb' :

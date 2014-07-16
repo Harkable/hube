@@ -10,12 +10,13 @@ var socialController = require("./socialController"),
     socketsController = require("./socketsController"),
         streamSettings = {
         streamInterval: 5000,
-        fbAccessToken: ''
+        fbAccessToken: '',
+        dribbbleLikes: 0,
+        facebookLikes: 0
     };
 
-
 module.exports.init = function(){
-    //socialController.twitterStream();
+    socialController.twitterStream();
 
     FB.api('oauth/access_token', {
         client_id: config.credentials.facebook.clientId,
@@ -48,14 +49,22 @@ module.exports.fbCall = function(){
 
     FB.setAccessToken(streamSettings.fbAccessToken);
 
+    var currentLikes = 0;
+
     FB.api('harkable', { fields: ['likes'], access_token: streamSettings.fbAccessToken }, function (res) {
         if(!res || res.error) {
             console.log(!res ? 'error occurred' : res.error);
             return;
         }
-        console.log(res.likes);
-        socketsController.update('fb');
-        //console.log(res.likes);
+
+        if(res.likes !== streamSettings.facebookLikes) {
+            console.log("FACEBOOK Likes updated to: ", res.likes);
+            streamSettings.facebookLikes = res.likes;
+            socketsController.update('fb');
+        } else {
+            console.log("no new Facebook Likes")
+        }
+
     });
 };
 
@@ -71,7 +80,15 @@ module.exports.dribbbleCall = function(){
 
             //last item
             if(index === json.shots.length -1) {
-                console.log(totalLikes);
+
+                if(totalLikes !== streamSettings.dribbbleLikes) {
+                    console.log("DRIBBLE likes updated to: ", totalLikes);
+                    streamSettings.dribbbleLikes = totalLikes;
+                    socketsController.update('drib');
+
+                } else {
+                    console.log("no new dribbble Likes")
+                }
             };
         });
 
@@ -90,10 +107,11 @@ module.exports.twitterStream = function(){
     });
 
     twit.stream('statuses/filter', {
-        track: 'harkable'
+        track: ['harkable', 'Harkable', '@harkable', '#Harkable']
     }, function(stream) {
         stream.on('data', function(tweet) {
-            console.log(tweet);
+            console.log("NEW TWEET with mention", tweet.text);
+            socketsController.update('tweeet');
         });
     });
 
