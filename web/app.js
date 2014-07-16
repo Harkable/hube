@@ -9,7 +9,8 @@ var express = require('express'),
 
 //modules
 var routes = require('./routes'),
-    socketsController = require("./controllers/socketsController");
+    socketsController = require("./controllers/socketsController"),
+    socialController = require("./controllers/socialController");
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -29,5 +30,7 @@ server.listen(app.get('port'), function(){
 routes.init(app);
 
 io.sockets.on('connection', socketsController.init );
+
+socialController.init();
 
 module.exports.io = io;
