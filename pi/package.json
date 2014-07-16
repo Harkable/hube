@@ -7,7 +7,8 @@
     "socket.io-client": "~1.0.6"
   },
   "devDependencies": {
-    "pi-gpio": "0.0.6"
+    "pi-gpio": "0.0.6",
+    "onoff": "~0.3.2"
   },
   "author": "Sam Billingham",
   "repository": {
