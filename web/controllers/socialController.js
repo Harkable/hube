@@ -111,7 +111,7 @@ module.exports.twitterStream = function(){
     }, function(stream) {
         stream.on('data', function(tweet) {
             console.log("NEW TWEET with mention", tweet.text);
-            socketsController.update('tweeet');
+            socketsController.update('tweet');
         });
     });
 
