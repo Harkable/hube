@@ -1,15 +1,17 @@
 "use strict";
 var config = require('../config'),
     FB = require('fb'),
+    twitter = require('twitter'),
     dribbbleApi = require('dribbble-api'),
     dribbble = new dribbbleApi();
 
 //includes
 var socialController = require("./socialController"),
-streamSettings = {
-    streamInterval: 5000,
-    fbAccessToken: ''
-};
+    socketsController = require("./socketsController"),
+        streamSettings = {
+        streamInterval: 5000,
+        fbAccessToken: ''
+    };
 
 
 module.exports.init = function(){
@@ -28,6 +30,8 @@ module.exports.init = function(){
             streamSettings.fbAccessToken = res.access_token;
             socialController.startStream();
     });
+
+    console.log("init social");
 };
 
 module.exports.startStream = function(){
@@ -50,6 +54,7 @@ module.exports.fbCall = function(){
             return;
         }
         console.log(res.likes);
+        socketsController.update('fb');
         //console.log(res.likes);
     });
 };
@@ -62,7 +67,8 @@ module.exports.dribbbleCall = function(){
 
         json.shots.forEach(function(element, index){
 
-            totalLikes +=element.likes_count
+            totalLikes += element.likes_count
+
             //last item
             if(index === json.shots.length -1) {
                 console.log(totalLikes);
@@ -73,5 +79,22 @@ module.exports.dribbbleCall = function(){
 };
 
 module.exports.twitterStream = function(){
+
+    console.log('running tweet');
+
+    var twit = new twitter({
+        consumer_key: config.credentials.twitter.consumer_key,
+        consumer_secret: config.credentials.twitter.consumer_secret,
+        access_token_key: config.credentials.twitter.access_token_key,
+        access_token_secret: config.credentials.twitter.access_token_secret
+    });
+
+    twit.stream('statuses/filter', {
+        track: 'harkable'
+    }, function(stream) {
+        stream.on('data', function(tweet) {
+            console.log(tweet);
+        });
+    });
 
 };
