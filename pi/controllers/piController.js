@@ -36,7 +36,7 @@ module.exports.facebook = function() {
     var intervalId;
     var durationId;
     var on;
-    var gpioPin = 23;
+    var gpioPin = 22;
 
 
     gpio.open(gpioPin, "output", function(err) {
