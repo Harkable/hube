@@ -1,5 +1,5 @@
 var app = require('../app'),
-    piContrller = require('./piController');
+    piController = require('./piController');
 
 module.exports.init = function(socket) {
 
@@ -10,15 +10,14 @@ module.exports.init = function(socket) {
         console.log(data);
 
         switch (data.type) {
-
             case 'fb':
-                piContrller.facebook();
+                piController.facebook();
                 break;
             case 'drib':
-                piContrller.dribble();
+                piController.dribble();
                 break;
             case 'tweet':
-                piContrller.twitter();
+                piController.twitter();
                 break;
         }
 

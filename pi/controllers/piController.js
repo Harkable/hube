@@ -1,7 +1,7 @@
-var gpio = require("pi-gpio"),
+var gpio = require("pi-gpio");
 
 module.exports.twitter = function() {
-
+    console.log("tw")
     setInterval(function() {
 
         gpio.open(16, "output", function(err) {
@@ -30,10 +30,10 @@ module.exports.twitter = function() {
         });
     });
 
-});
+};
 
 module.exports.facebook = function() {
-
+    console.log("fb")
     setInterval(function() {
 
         gpio.open(23, "output", function(err) {
@@ -62,11 +62,9 @@ module.exports.facebook = function() {
         });
     });
 
-
-});
+};
 
 module.exports.dribble = function() {
-
     setInterval(function() {
 
         gpio.open(5, "output", function(err) {
@@ -95,5 +93,4 @@ module.exports.dribble = function() {
         });
     });
 
-
-});
+};
