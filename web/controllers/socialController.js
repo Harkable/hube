@@ -1,29 +1,77 @@
 "use strict";
 var config = require('../config'),
     FB = require('fb'),
-    socialController = require("./socialController");
+    dribbbleApi = require('dribbble-api'),
+    dribbble = new dribbbleApi();
 
-module.exports.init = function(socket){
-    socialController.fbStream();
-    socialController.twitterStream();
+//includes
+var socialController = require("./socialController"),
+streamSettings = {
+    streamInterval: 5000,
+    fbAccessToken: ''
 };
 
-module.exports.fbStream = function(socket){
 
-    setInterval( function() {
+module.exports.init = function(){
+    //socialController.twitterStream();
 
-        FB.api('/harkable', function (res) {
+    FB.api('oauth/access_token', {
+        client_id: config.credentials.facebook.clientId,
+        client_secret: config.credentials.facebook.clientSecret,
+        grant_type: 'client_credentials'
+        }, function (res) {
             if(!res || res.error) {
                 console.log(!res ? 'error occurred' : res.error);
                 return;
             }
-            console.log(res.likes);
-        });
 
-    }, 5000);
-
+            streamSettings.fbAccessToken = res.access_token;
+            socialController.startStream();
+    });
 };
 
-module.exports.twitterStream = function(socket){
+module.exports.startStream = function(){
+
+    setInterval( function() {
+
+        socialController.fbCall();
+        socialController.dribbbleCall();
+
+    }, streamSettings.streamInterval);
+};
+
+module.exports.fbCall = function(){
+
+    FB.setAccessToken(streamSettings.fbAccessToken);
+
+    FB.api('harkable', { fields: ['likes'], access_token: streamSettings.fbAccessToken }, function (res) {
+        if(!res || res.error) {
+            console.log(!res ? 'error occurred' : res.error);
+            return;
+        }
+        console.log(res.likes);
+        //console.log(res.likes);
+    });
+};
+
+module.exports.dribbbleCall = function(){
+
+    var totalLikes = 0;
+
+    dribbble.playerShots('harkable', function(err, res, json, paging) {
+
+        json.shots.forEach(function(element, index){
+
+            totalLikes +=element.likes_count
+            //last item
+            if(index === json.shots.length -1) {
+                console.log(totalLikes);
+            };
+        });
+
+    });
+};
+
+module.exports.twitterStream = function(){
 
 };
