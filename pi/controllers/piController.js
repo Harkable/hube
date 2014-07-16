@@ -59,7 +59,7 @@ module.exports.twitter = function() {
             gpio.close(gpioPin); // then Close pin 16 
             process.exit(0); // and terminate the program 
         });
-    }, 10000); // duration in mS
+    }, 2000); // duration in mS
 
 };
 
