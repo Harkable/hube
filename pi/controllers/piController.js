@@ -37,15 +37,16 @@ module.exports.twitter = function() {
 
     var intervalId;
     var durationId;
+    var on;
     var gpioPin = 16;
 
     gpio.open(gpioPin, "output", function(err) {
-        var on = 1;
+        on = 1;
         console.log('GPIO pin ' + gpioPin + ' is open. toggling LED every 100 mS for 10s');
     });
 
     intervalId = setInterval(function() {
-        gpio.write(gpioPin, 1, function() { // toggle pin between high (1) and low (0) 
+        gpio.write(gpioPin, on, function() { // toggle pin between high (1) and low (0) 
             on = (on + 1) % 2;
         });
     }, 100);
