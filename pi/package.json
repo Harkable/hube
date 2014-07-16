@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Harkable Cube",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "socket.io-client": "~1.0.6"
+  },
   "devDependencies": {
     "pi-gpio": "0.0.6"
   },

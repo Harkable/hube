@@ -36,5 +36,3 @@ io.sockets.on('connection', socketsController.init);
 socialController.init();
 
 module.exports.io = io;
-module.exports.badger = 'animal';
-
