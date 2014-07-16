@@ -60,7 +60,7 @@ module.exports.twitter = function() {
         });
     }, 10000); // duration in mS
 
-});
+};
 
 // module.exports.facebook = function() {
 //     console.log("fb")
