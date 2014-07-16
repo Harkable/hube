@@ -1,7 +1,8 @@
 // var gpio = require("pi-gpio");
 var Gpio = require('onoff').Gpio,
     tw1 = new Gpio(16, 'out'),
-    tw2 = new Gpio(18, 'out');
+    tw2 = new Gpio(18, 'out'),
+    iv;
 
 module.exports.twitter = function() {
     console.log("tw")
@@ -37,15 +38,20 @@ module.exports.twitter = function() {
     //     });
     // });
     // 
+    // 
 
-    setInterval(function() {
-        tw1.writeSync(1);
-        tw2.writeSync(1);
-    }, 2000);
+    iv = setInterval(function() {
+        tw1.writeSync(tw1.readSync() === 0 ? 1 : 0);
+        tw2.writeSync(tw2.readSync() === 0 ? 1 : 0);
+    }, 200);
 
-    tw1.writeSync(0);
-    tw2.writeSync(0);
-
+    setTimeout(function() {
+        clearInterval(iv);
+        tw1.writeSync(0);
+        tw1.unexport();
+        tw2.writeSync(0);
+        tw2.unexport();
+    }, 5000);
 
 };
 
