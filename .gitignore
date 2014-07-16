@@ -15,10 +15,16 @@ Thumbs.db
 npm-debug.log
 node_modules/
 pi/node_modules/
+web/node_modules/
+web/.sass-cache/
+web/sass/bourbon
+web/sass/neat
+web/sass/bitters
 
 # Config #
 ##########
 pi/config.js
+web/config.js
 
 # Compiled source #
 ###################
