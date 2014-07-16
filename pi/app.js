@@ -8,6 +8,4 @@ var socketController = require('./controllers/socketController');
 
 socket.on('connect', socketController.init);
 
-piController.facebook();
-
 module.exports.socket = socket;
