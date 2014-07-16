@@ -11,7 +11,8 @@ var express = require('express'),
 
 //modules
 var routes = require('./routes'),
-    socketsController = require("./controllers/socketsController");
+    socketsController = require("./controllers/socketsController"),
+    socialController = require("./controllers/socialController");
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -50,3 +51,7 @@ twit.stream('statuses/filter', {
         console.log(tweet);
     });
 });
+
+socialController.init();
+
+module.exports.io = io;
