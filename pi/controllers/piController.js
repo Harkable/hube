@@ -4,12 +4,14 @@ module.exports.twitter = function() {
     console.log("tw")
     setInterval(function() {
 
+        gpio.close(16);
         gpio.open(16, "output", function(err) {
             gpio.write(16, 1, function() {
                 gpio.close(16);
             });
         });
 
+        gpio.close(18);
         gpio.open(18, "output", function(err) {
             gpio.write(18, 1, function() {
                 gpio.close(18);
@@ -18,12 +20,14 @@ module.exports.twitter = function() {
 
     }, 10000);
 
+    gpio.close(16);
     gpio.open(16, "output", function(err) {
         gpio.write(16, 0, function() {
             gpio.close(16);
         });
     });
 
+    gpio.close(18);
     gpio.open(18, "output", function(err) {
         gpio.write(18, 0, function() {
             gpio.close(18);
