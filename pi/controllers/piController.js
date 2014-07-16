@@ -36,7 +36,7 @@ module.exports.facebook = function() {
     var intervalId;
     var durationId;
     var on;
-    var gpioPin = 22;
+    var gpioPin = 18;
 
 
     gpio.open(gpioPin, "output", function(err) {
@@ -65,7 +65,7 @@ module.exports.dribble = function() {
     var intervalId;
     var durationId;
     var on;
-    var gpioPin = 5;
+    var gpioPin = 22;
 
 
     gpio.open(gpioPin, "output", function(err) {
