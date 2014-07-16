@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "twitter": "~0.2.9",
-    "cron": "~1.0.4"
+    "cron": "~1.0.4",
+    "mongodb": "~1.4.7"
   }
 }
