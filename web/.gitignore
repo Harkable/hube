@@ -4,3 +4,5 @@ node_modules/
 sass/bourbon
 sass/neat
 sass/bitters
+
+config.js
