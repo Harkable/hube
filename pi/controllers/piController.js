@@ -45,7 +45,7 @@ module.exports.twitter = function() {
     });
 
     intervalId = setInterval(function() {
-        gpio.write(gpioPin, on, function() { // toggle pin between high (1) and low (0) 
+        gpio.write(gpioPin, 1, function() { // toggle pin between high (1) and low (0) 
             on = (on + 1) % 2;
         });
     }, 100);
