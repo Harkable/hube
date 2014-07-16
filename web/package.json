@@ -17,5 +17,9 @@
   },
   "engines": {
     "node": "0.10.x"
+  },
+  "devDependencies": {
+    "twitter": "~0.2.9",
+    "cron": "~1.0.4"
   }
 }
