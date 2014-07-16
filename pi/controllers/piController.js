@@ -1,8 +1,4 @@
-// var gpio = require("pi-gpio");
-var Gpio = require('onoff').Gpio,
-    tw1 = new Gpio(23, 'out'),
-    tw2 = new Gpio(24, 'out'),
-    iv;
+var gpio = require("pi-gpio");
 
 module.exports.twitter = function() {
     console.log("tw")
@@ -38,22 +34,33 @@ module.exports.twitter = function() {
     //     });
     // });
     // 
-    // 
 
-    iv = setInterval(function() {
-        tw1.writeSync(tw1.readSync() === 0 ? 1 : 0);
-        tw2.writeSync(tw2.readSync() === 0 ? 1 : 0);
-    }, 200);
+    var intervalId;
+    var durationId;
+    var gpioPin = 16;
 
-    setTimeout(function() {
-        clearInterval(iv);
-        tw1.writeSync(0);
-        tw1.unexport();
-        tw2.writeSync(0);
-        tw2.unexport();
-    }, 5000);
+    gpio.open(gpioPin, "output", function(err) {
+        var on = 1;
+        console.log('GPIO pin ' + gpioPin + ' is open. toggling LED every 100 mS for 10s');
+    });
 
-};
+    intervalId = setInterval(function() {
+        gpio.write(gpioPin, on, function() { // toggle pin between high (1) and low (0) 
+            on = (on + 1) % 2;
+        });
+    }, 100);
+
+    durationId = setTimeout(function() {
+        clearInterval(intervalId);
+        clearTimeout(durationId);
+        console.log('10 seconds blinking completed');
+        gpio.write(gpioPin, 0, function() { // turn off pin 16 
+            gpio.close(gpioPin); // then Close pin 16 
+            process.exit(0); // and terminate the program 
+        });
+    }, 10000); // duration in mS
+
+});
 
 // module.exports.facebook = function() {
 //     console.log("fb")
